@@ -1,0 +1,87 @@
+format ELF
+
+section '.data' writeable
+    a dq 0
+    b db 0
+    c db 0
+    d db 0
+    helloString db "Задача №443\n",0
+    rawStr db "%s",0
+    rawInt db "%d",0
+    inputFormat db "Введите %s: ",0
+    a_lit db "A",0
+    b_lit db "B",0
+    c_lit db "C",0
+    d_lit db "D",0
+    two db 2
+
+section '.text' executable
+public main
+extrn scanf
+extrn printf
+
+triangle: ;Вычисление площади треугольника, перед этим нужно поместить в стек его стороны
+    fldz            ;Кладём ноль на вершину стека Стек: 0|A|B|C
+    fadd st0,st1    ;Прибавляем к нему A                A|A|B|C
+    fadd st0,st2    ;                  B              A+B|A|B|C
+    fadd st0,st3    ;                  C            A+B+C|A|B|C
+    fild dword [two];Кладём двойку                2|A+B+C|A|B|C
+    fdivp           ;Делим на неё                       p|A|B|C
+    fsub st1,st0    ;Вычитаем                         p|p-A|B|C
+    fsub st2,st0    ;                               p|p-A|p-B|C
+    fsub st3,st0    ;                             p|p-A|p-B|p-C
+    fmulp           ;Умножаем                   p*(p-A)|p-B|p-C
+    fmulp           ;                         p*(p-A)*(p-B)|p-C
+    fmulp           ;                       p*(p-A)*(p-B)*(p-C)
+    fsqrt           ;Извлекаем корень                         S
+main:
+    finit
+    push helloString ;Приветствие
+    push rawStr
+    call printf
+    add esp, 8
+    
+    push a_lit
+    push inputFormat
+    call printf
+    add esp, 8
+    
+    push a
+    push rawInt
+    call scanf
+    add esp, 8
+    
+    push b_lit
+    push inputFormat
+    call printf
+    add esp, 8
+    
+    push b
+    push rawInt
+    call scanf
+    add esp,8
+    
+    push c_lit
+    push inputFormat
+    call printf
+    add esp, 8
+    
+    push c
+    push rawInt
+    call scanf
+    add esp, 8
+    
+    push d_lit
+    push inputFormat
+    call printf
+    add esp, 8
+    
+    push d
+    push rawInt
+    call scanf
+    add esp,8
+   
+    
+    
+    xor eax, eax
+    ret
