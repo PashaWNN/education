@@ -1,19 +1,23 @@
 format ELF
 
 section '.data' writeable
-    a dq 0
+    a db 0
     b db 0
     c db 0
     d db 0
+    res dq 0
     helloString db "Задача №443\n",0
     rawStr db "%s",0
     rawInt db "%d",0
     inputFormat db "Введите %s: ",0
+    outputFormat dd "%f",0
     a_lit db "A",0
     b_lit db "B",0
     c_lit db "C",0
     d_lit db "D",0
     two db 2
+    twopointfive dq 2.5
+    
 
 section '.text' executable
 public main
@@ -34,6 +38,7 @@ triangle: ;Вычисление площади треугольника, пер�
     fmulp           ;                         p*(p-A)*(p-B)|p-C
     fmulp           ;                       p*(p-A)*(p-B)*(p-C)
     fsqrt           ;Извлекаем корень                         S
+ret
 main:
     finit
     push helloString ;Приветствие
@@ -81,7 +86,31 @@ main:
     call scanf
     add esp,8
    
+    fld1
+    fild dword [two]
+    fild dword [a]
+    call triangle
     
+    fild dword [two]
+    fld qword [twopointfive]
+    fild dword [b]
+    call triangle
+    
+    fild dword [c]
+    fild dword [d]
+    fld qword [twopointfive]
+    call triangle
+    
+    faddp
+    faddp
+    
+    fstp qword[res]
+    
+    push dword[res+4]
+    push dword[res]
+    push outputFormat
+    call printf
+    add esp,12
     
     xor eax, eax
     ret
