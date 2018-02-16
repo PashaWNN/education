@@ -1,14 +1,10 @@
 format ELF
 
 section '.data' writeable
-    rawStr db "%s",0
     rawFloat db "%lf",0
     resultStr db "f(x) = %f",0
     a dq 0
     y dq 0
-    msg db "gt",0
-    msg1 db "lt",0
-    buffer db 0
 
 section '.text' executable
 extrn printf
@@ -17,7 +13,6 @@ extrn atof
 public main
 
 main:
-    mov ebp, esp; for correct debugging
     push a
     push rawFloat
     call scanf
