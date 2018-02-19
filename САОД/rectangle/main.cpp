@@ -53,6 +53,13 @@ private:
     void Init(float x, float y, float fi, float width, float height) { //TODO: Add validation
         SetCoords(x, y);
         _fi = fi;
+        try {
+            if ((width < 0) || (height < 0)) { throw "Invalid argument: width and height can't be less than zero."; }
+        }
+        catch (char const* e) {
+            cout << e << endl;
+            terminate();
+        }
         _width = width;
         _height = height;
     }
