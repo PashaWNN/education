@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/pashawnn/Desktop/Учебка/education/САОД/rectangle/main.cpp
+iostream
+-
+cmath
+-
+limits
+-
+vector
+-
+fstream
+-
+ncurses.h
+-
+
