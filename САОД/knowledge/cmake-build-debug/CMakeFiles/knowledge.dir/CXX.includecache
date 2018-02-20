@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/pashawnn/Desktop/Учебка/education/САОД/knowledge/main.cpp
+iostream
+-
+cstdlib
+-
+ncurses.h
+-
+

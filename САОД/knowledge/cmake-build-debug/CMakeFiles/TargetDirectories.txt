@@ -1,0 +1,3 @@
+/home/pashawnn/Desktop/Учебка/education/САОД/knowledge/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/pashawnn/Desktop/Учебка/education/САОД/knowledge/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/pashawnn/Desktop/Учебка/education/САОД/knowledge/cmake-build-debug/CMakeFiles/knowledge.dir

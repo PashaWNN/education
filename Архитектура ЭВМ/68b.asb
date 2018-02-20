@@ -1,0 +1,98 @@
+format ELF
+section '.data' writeable
+
+text db "1113",0
+its3text db "It's 3!",0
+not3text db "It's not 3!",0
+
+section '.text' executable
+public main
+print:
+    mov eax, 4 
+    mov ebx, 1  
+    int 0x80
+ret
+
+incFirst:
+  mov ebp, edx ;It's okay to move symbol if it's already in stack
+  fadd st1,st        ;Increment
+ret
+ 
+incSecond:
+  mov esp, edx
+  fadd st2,st
+ret
+
+not3:  ;What if there's less than 3 similar symbols
+mov ecx, not3text
+mov edx, 0x11
+call print
+jmp _end
+
+its3:
+mov ecx, its3text
+mov edx, 0x7
+call print
+jmp _end
+
+read:
+    push eax
+    push ebx
+    push edx
+    mov eax, 3 
+    mov ebx, 0
+    mov edx, 0x4
+    int 0x80
+    pop edx
+    pop ebx
+    pop eax
+ret
+; ebp, esp, esi, edi
+main:
+    finit
+    fld1
+    mov ebp, esp; for correct debugging
+    xor eax, eax
+    mov edx, text
+    mov ecx, 0x4  ;Symbols count
+    mov edx, text ;Text pointer, used to access to symbols
+    ;Reading first sym:
+    call incFirst
+    inc edx
+    ;Reading second sym:
+    cmp byte[edx], ebp
+    jne ne1
+    call incFirst
+    ne1:
+    call incSecond
+    inc edx
+    ;Reading third sym:
+    cmp byte[edx], ebp
+    jne ne2
+    call incFirst
+    ne2:
+    cmp byte[edx], esp
+    jne ne3
+    call incSecond
+    ne3:
+    jmp not3
+    ;Reading fourth sym:
+    cmp byte[edx], ebp
+    jne ne4
+    call incFirst
+    ne4:
+    cmp byte[edx], esp
+    jne ne5
+    call incSecond
+    ne5:
+    jmp not3
+    
+    fcomi st,st1
+    je its3
+    fcomi st,st2
+    je its3
+    jne not3
+_end:
+    
+    xor eax, eax
+ret
