@@ -3,7 +3,6 @@
 #include <limits>
 #include <vector>
 #include <fstream>
-#include <ncurses.h>
 
 using namespace std;
 

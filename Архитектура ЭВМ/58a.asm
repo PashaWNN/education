@@ -9,10 +9,10 @@ section '.data' writeable
 section '.text' executable
 extrn   printf
 extrn   scanf
-extrn   atof
 public  main
 
 main:
+    mov ebp, esp; for correct debugging
     push a
     push rawFloat
     call scanf

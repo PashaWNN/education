@@ -34,8 +34,6 @@ print:
     int 0x80
 ret
 
-
-
 triangle: ;Calculate triangles S by A,B,C stored in st(0-2)
 ;Check if triangle exists
     fldz
@@ -153,4 +151,3 @@ main:
     add esp, 12
     xor eax, eax
     ret
-

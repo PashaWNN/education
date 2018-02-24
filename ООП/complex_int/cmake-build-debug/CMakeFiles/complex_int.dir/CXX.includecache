@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/pashawnn/Desktop/Учебка/education/ООП/complex_int/complex.cpp
+cmath
+-
+complex.h
+/home/pashawnn/Desktop/Учебка/education/ООП/complex_int/complex.h
+
+/home/pashawnn/Desktop/Учебка/education/ООП/complex_int/complex.h
+iostream
+-
+cstdlib
+-
+
+/home/pashawnn/Desktop/Учебка/education/ООП/complex_int/main.cpp
+iostream
+-
+complex.h
+/home/pashawnn/Desktop/Учебка/education/ООП/complex_int/complex.h
+

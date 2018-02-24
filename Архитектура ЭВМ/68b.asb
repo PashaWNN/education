@@ -1,17 +1,15 @@
 format ELF
 section '.data' writeable
 
-text db "1113",0
+text dd 0
+rawInt db "%s",0
 its3text db "It's 3!",0
 not3text db "It's not 3!",0
 
 section '.text' executable
+extrn scanf
+extrn printf
 public main
-print:
-    mov eax, 4 
-    mov ebx, 1  
-    int 0x80
-ret
 
 incFirst:
   mov ebp, edx ;It's okay to move symbol if it's already in stack
@@ -49,9 +47,27 @@ read:
 ret
 ; ebp, esp, esi, edi
 main:
+mov ebp, esp; for correct debugging
+    push text
+    push rawInt
+    call scanf
+    add esp,8
+    
     finit
-    fld1
-    mov ebp, esp; for correct debugging
+    fild text
+    fldz
+    fadd
+    fidiv 1000
+    fldz
+    fadd st2
+    fsub st1
+    
+    fldz
+    fadd
+    fldz
+    fadd
+    
+    fidiv st4,1000
     xor eax, eax
     mov edx, text
     mov ecx, 0x4  ;Symbols count
