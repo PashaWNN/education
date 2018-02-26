@@ -15,13 +15,14 @@ public:
     friend Complex operator*(const Complex &c1, const Complex &c2);
     friend Complex operator/(const Complex &c1, const Complex &c2);
     friend Complex operator-(const Complex &c1, const Complex &c2);
+    friend Complex operator*(const Complex &c, const double &r);
     Complex() = default;
     operator std::string();
     Complex(double re, double im);
-    double getReal();
-    double getModZ();
-    double getArgZ();
-    double getImaginary();
+    double Real();
+    double Mod();
+    double Arg();
+    double Imag();
 
 };
 

@@ -12,11 +12,11 @@ Complex::Complex(double re, double im) {
     imaginary = im;
 }
 
-double Complex::getReal() {
+double Complex::Real() {
     return real;
 }
 
-double Complex::getImaginary() {
+double Complex::Imag() {
     return imaginary;
 }
 
@@ -48,11 +48,16 @@ Complex operator*(const Complex &c1, const Complex &c2)
     return Complex(a*c - b*d, a*d + b*c);
 }
 
-double  Complex::getModZ() {
+Complex operator*(const Complex &c, const double &r)
+{
+    return Complex(c.real * r, 0);
+}
+
+double  Complex::Mod() {
     return sqrt(pow(this->getReal(), 2) + pow(this->getImaginary(), 2));
 }
 
-double Complex::getArgZ() {
+double Complex::Arg() {
     return acos(this->getReal()/this->getModZ());
 }
 
