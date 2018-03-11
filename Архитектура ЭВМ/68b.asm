@@ -1,8 +1,7 @@
 format ELF
 section '.data' writeable
 
-text dd 0
-welcome db "68b. Enter n<=9999: ",0
+welcome db "68b. Enter 1000<=n<=9999: ",0
 trueStr db "There are 3 similar digits.",0
 falseStr db "There aren't 3 similar digits(Less or more)",0
 rawStr db "%s",0
@@ -14,28 +13,7 @@ extrn scanf
 extrn printf
 public main
 
-incFirst:
-  mov ebp, edx ;It's okay to move symbol if it's already in stack
-  fadd st1,st        ;Increment
-ret
- 
-incSecond:
-  mov esp, edx
-  fadd st2,st
-ret
 
-read:
-    push eax
-    push ebx
-    push edx
-    mov eax, 3 
-    mov ebx, 0
-    mov edx, 0x4
-    int 0x80
-    pop edx
-    pop ebx
-    pop eax
-ret
 main:
 mov ebp, esp; for correct debugging
     push welcome
@@ -43,19 +21,19 @@ mov ebp, esp; for correct debugging
     call printf
     add esp, 8
 
-    push text
+    push value
     push rawInt
     call scanf
     add esp,8
 
-    mov eax, [text]
-    ;cmp eax, 1000 It wasn't in task
-    ;jl main
+    mov eax, [value]
+    cmp eax, 1000 
+    jl main
     cmp eax, 9999
     jg main
     
     xor edx,edx
-    mov eax, [text]
+    mov eax, [value]
     mov bx, 10
     div bx
     mov [value],edx

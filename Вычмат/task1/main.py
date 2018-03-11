@@ -26,8 +26,6 @@ def calculate():
                 b = b - f(b)*((b-a)/(f(b)-f(a)))
             elif f(b)*f2(b) > 0:
                 b = b - (f(b)/f1(b))
-            #print(a)
-            #print(b)
             if not (abs(a - b) > epsilon):
                 _next = False
                 x = (a + b)/2
