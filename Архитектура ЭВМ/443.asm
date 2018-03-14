@@ -1,39 +1,174 @@
-format ELF
+org 100h
 
-section '.data' writeable
-    a dd 0
-    b dd 0
-    c dd 0
-    d dd 0
-    length rb 0x32
-    res dq 0
-    helloString db "Задача №443",0Dh,0Ah,0
-    errorString db "Ошибка: один или более треугольников с заданными сторонами не существуют!",0Dh,0Ah,0
-    rawInt db "%d",0
-    inputFormat db "Введите %s: ",0
-    outputFormat db "Площадь многоугольника: %f",0
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;             Program body              ;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+main:
+  mov di,input_a
+  mov cx,print_str
+  call cx
+  call input_unsigned_int
+  mov [a], eax
+  call cx
+
+  mov di,input_b
+  mov cx,print_str
+  call cx
+  call input_unsigned_int
+  mov [b], eax
+  call cx
+
+  mov di,input_c
+  mov cx,print_str
+  call cx
+  call input_unsigned_int
+  mov [c], eax
+  call cx
+
+  mov di,input_d
+  mov cx,print_str
+  call cx
+  call input_unsigned_int
+  mov [d], eax
+  call cx
+
+  fld1
+  fild dword[two]
+  fild dword[a]
+  call triangle
     
-    a_lit db "Введите A: ",0 ;Literals for strings in console
-    b_lit db "Введите B: ",0
-    c_lit db "Введите C: ",0
-    d_lit db "Введите D: ",0
-    lit_let rb 0x12
-    two db 2       ;Constants
-    twopointfive dq 2.5
+  fild dword [two]
+  fld qword [twopointfive]
+  fild dword [b]
+  call triangle
     
+  fild dword [c]
+  fild dword [d]
+  fld qword [twopointfive]
+  call triangle
 
-section '.text' executable
-public main
-extrn scanf
-extrn printf
+  faddp  ; Sum of triangles S's
+  faddp
+    
+    
+  fistp dword[r]
+  mov di, result
+  call print_str
+  mov eax, [r]
+  call print_unsigned_int
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-print:
-    mov eax, 4 
-    mov ebx, 1  
-    mov edx, 0x14
-    int 0x80
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;            I/O procedures             ;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+input_str:
+  push cx
+  mov cx,ax
+  mov ah,0Ah
+  mov [buffer],al
+  mov byte[buffer+1],0
+  mov dx,buffer
+  int 21h
+  mov al,[buffer+1]
+  add dx,2
+  mov ah,ch
+  mov di,endline
+  call print_str
+  pop cx
+ret 
+
+strToUInt: ;String to integer
+  push cx
+  push dx
+  push bx
+  push si
+  push di
+
+  mov si,dx
+  mov di,10
+  movzx cx,al
+  xor ax,ax
+  xor bx,bx
+  studw_lp:
+    mov bl,[si]
+    inc si
+    sub bl,'0'
+    mul di
+    add ax,bx
+    loop studw_lp
+    jmp studw_exit
+  studw_exit:
+  pop di
+  pop si
+  pop bx
+  pop dx
+  pop cx
 ret
 
+input_unsigned_int:
+  push dx
+  mov al,6
+  call input_str
+  mov si,dx
+  call strToUInt
+  pop dx
+ret
+
+print_unsigned_int:
+  push di
+  mov di,buffer
+  push di
+  call uintToStr
+  mov byte[di],'$'
+  pop di
+  call print_str
+  pop di
+ret
+
+uintToStr:
+  push ax
+  push cx
+  push dx
+  push bx
+  xor cx,cx
+  mov bx,10
+
+  wtuds_lp1:
+  xor dx,dx
+  div bx; AX=(DX:AX)/BX
+  add dl,'0'
+  push dx
+  inc cx
+  test ax,ax
+  jnz wtuds_lp1
+
+  wtuds_lp2:
+  pop dx
+  mov [di],dl
+  inc di
+  loop wtuds_lp2
+
+  pop bx
+  pop dx
+  pop cx
+  pop ax
+ret
+
+print_str:
+  push ax
+  mov ah,9
+  xchg dx,di
+  int 21h
+  xchg dx,di
+  pop ax
+ret
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;          My own procedures            ;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 triangle: ;Calculate triangles S by A,B,C stored in st(0-2)
 ;Check if triangle exists
     fldz
@@ -80,73 +215,40 @@ triangle: ;Calculate triangles S by A,B,C stored in st(0-2)
 ret
 
 doesntexist:
-    mov ecx, errorString
-    call print
+    xor eax,eax
+    xor ebx,ebx
+    xor ecx,ecx
+    xor edx,edx
+    finit
+    mov di,dsntex
+    mov cx,print_str
+    call cx
+    mov di,endline
+    call cx
     jmp main
 ret
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-main:
-    mov ebp, esp; for correct debugging
-    finit
-    
-    mov ecx, helloString
-    call print
-    
-    mov ecx, a_lit
-    call print
-    
-    push a
-    push rawInt
-    call scanf
-    add esp, 8
-     
-    mov ecx, b_lit
-    call print
-    
-    push b
-    push rawInt
-    call scanf
-    add esp,8
-    
-    mov ecx, c_lit
-    call print
-    
-    push c
-    push rawInt
-    call scanf
-    add esp, 8
-    
-    mov ecx, d_lit
-    call print
-    
-    push d
-    push rawInt
-    call scanf
-    add esp,8
-   
-    fld1
-    fild dword[two]
-    fild dword[a]
-    call triangle
-    
-    fild dword [two]
-    fld qword [twopointfive]
-    fild dword [b]
-    call triangle
-    
-    fild dword [c]
-    fild dword [d]
-    fld qword [twopointfive]
-    call triangle
-    
-    faddp  ; Sum of triangles S's
-    faddp
-    
-    fstp qword[res]
-    push dword[res+4]
-    push dword[res]
-    push outputFormat
-    call printf    
-    add esp, 12
-    xor eax, eax
-    ret
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;             Data segment              ;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+input_a db 'Input A: $'
+input_b db 'Input B: $'
+input_c db 'Input C: $'
+input_d db 'Input D: $'
+result  db 'Triangle S: $'
+dsntex  db 'Triangle with such sides does not exist! $'
+
+a dd ?
+b dd ?
+c dd ?
+d dd ?
+r dd ?
+
+endline db 13,10,'$'
+buffer  rb 256
+
+two          db 2   ;Constants
+twopointfive dq 2.5
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
