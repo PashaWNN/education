@@ -142,7 +142,6 @@ main:
     faddp  ; Sum of triangles S's
     faddp
     
-    
     fstp qword[res]
     push dword[res+4]
     push dword[res]

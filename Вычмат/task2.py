@@ -3,6 +3,8 @@ eps2 = 0.01
 delta  = 0.1
 a = 0
 b = 0
+
+
 def fun(x):
     return 1.3**(2*x**2-3*x+1)
 
@@ -12,6 +14,7 @@ def fundx(x):
 
 
 def dihotomy(a, b, f, fdx, e1, e2):
+    print(a, b)
     while (abs(b-a)/2<=e1) and (fdx((b+a)/2)<e2):
         x = (a+b)/2
         f1 = f(x-e1)
@@ -31,7 +34,7 @@ def svenn(x0, d, f):
         a = x0 - d
         b = x0 + d
         print("a = %f, b = %f" % (a, b))
-        #return True
+        return True
     if ((x0-d)>=f(x0)) and (f(x0)>=f(x0+d)):
         a = x0
         print("a = %f" % a)
@@ -64,9 +67,9 @@ def svenn(x0, d, f):
             break
     if d>0: b = x2
     if d<0: a = x2
+    r = dihotomy(a, b, fun, fundx, eps1, eps2)
+    print('x = %f\nf(x) = %f' % (r, fun(r)))
     return True
     
 
-if svenn(0.8, delta, fun):
-    r = dihotomy(a, b, fun, fundx, eps1, eps2)
-    print('x = %f\nf(x) = %f' % (r, fun(r)))
+svenn(0.9, delta, fun)
