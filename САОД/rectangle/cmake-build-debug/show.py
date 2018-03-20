@@ -33,6 +33,7 @@ for line in f:
     verts.append((float(mo.group(7)), float(mo.group(8))))
     verts.append((float(mo.group(1)), float(mo.group(2))))
     paths.append(Path(verts, codes))
+    print(verts)
 
 fig = plt.figure()
 ax = fig.add_subplot(111)
