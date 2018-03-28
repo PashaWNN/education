@@ -20,3 +20,4 @@ x = float(input("Введите X: "))
 y = float(input("Введите Y: "))
 print("Точка %sлежит в области D" % ('' if D(x,y) else 'не '))
 print("U = {0:.2f}".format((x**2-1) if D(x, y) else (sqrt(abs(x-1)))))
+#Зачтено

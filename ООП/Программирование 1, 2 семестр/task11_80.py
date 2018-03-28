@@ -7,8 +7,12 @@ from math import factorial as f
 
 x = float(input('Введите х: '))
 
+lastFac = 2*3
 res = x
-for i in range(3, 14, 4):
-  res -= x**i/f(i)+x**i+2/f(i+2)
+for i in range(3, 140, 4):
 
-print('Результат: {0:.2f}'.format(res))
+  res -= x**i/f(i)+x**i+2/f(i+2)
+  lastFac = 
+
+print('Результат: {0:.8f}'.format(res))
+

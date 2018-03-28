@@ -13,27 +13,35 @@ def tg(x):
 
 
 def _a(h):
-  return sqrt((sin(8*h)+17)/(1-sin(4*h)*(h**2+18))**2)
+  try:
+    return sqrt((sin(8*h)+17)/(1-sin(4*h)*(h**2+18))**2)
+  except ValueError:
+    print("Ошибка: подкоренное выражение меньше нуля.")
 
 
 def _b(a, h):
-  return 1-sqrt(3/(3+abs(tg(a*h**2)-sin(a*h))))
+  try:
+    return 1-sqrt(3/(3+abs(tg(a*h**2)-sin(a*h))))
+  except ValueError:
+    print("Ошибка: подкоренное выражение меньше нуля.")
 
 
 def _c(a, b, h):
   return a*h**2*sin(b*h)+b*h**3*cos(a*h)
 
+try:
+  h = float(input("Введите число h: "))
+  a = _a(h)
+  b = _b(a, h)
+  c = _c(a, b, h)
+  D = b**2 - 4*a*c
 
-h = float(input("Введите число h: "))
-a = _a(h)
-b = _b(a, h)
-c = _c(a, b, h)
-D = b**2 - 4*a*c
-
-if D < 0:
-  print("Корней нет.")
-else:
-  print("x1 = {0:.2f}".format((-b+sqrt(D))/2*a))
-  if D > 0:
-    print("x2 = {0:.2f}".format((-b-sqrt(D))/2*a))
+  if D < 0:
+    print("Действительных корней нет.")
+  else:
+    print("x1 = {0:.2f}".format((-b+sqrt(D))/2*a))
+    if D > 0:
+      print("x2 = {0:.2f}".format((-b-sqrt(D))/2*a))
+except:
+  pass
 

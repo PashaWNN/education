@@ -4,13 +4,15 @@
 Дано натуральное число n. Получить последовательность b1, ..., bn, где при i = 1, 2, ..., n значение b i равно 1+1/2+...+1/i.
 """
 n = int(input("Введите n: "))
+if n < 0:
+  print("Введено ненатуральное число.")
+else:
+  b = []
 
-b = []
+  sum = 0.0
 
-sum = 0.0
+  for i in range(1, n+1):
+    sum += 1/i
+    b.append(sum)
 
-for i in range(1, n+1):
-  sum += 1/i
-  b.append(sum)
-
-print(b)
+  print(b)

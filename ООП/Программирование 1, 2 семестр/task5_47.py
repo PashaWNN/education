@@ -12,7 +12,7 @@ def checkTriangle(a, b, c):
            }
   if a + b > c and a + c > b and b + c > a:
     result['exist'] = True
-  if ((a**2)+(b**2)-(c**2))/(2*a*b)>0:
+  if ((a**2)+(b**2)-(c**2))/(2*a*b)<=0:
     result['acute'] = True
   return result
 

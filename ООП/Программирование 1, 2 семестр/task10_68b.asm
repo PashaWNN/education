@@ -105,3 +105,4 @@ false:
 theend:
     xor eax, eax
 ret
+;Зачтено

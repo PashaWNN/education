@@ -19,3 +19,4 @@ else:
 print("max(%d, %d) = %d" % (x, y, _max))
 print("min(%d, %d) = %d" % (x, y, _min))
 """
+#Зачтено

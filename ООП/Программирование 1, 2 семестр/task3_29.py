@@ -7,9 +7,11 @@
 
 def fun(x, y):
     m = x*y
-    return m*(m+m+m-(y+y)-7*x+15)+y*(10-4*y)+x*(x+x-3)+6
+    return m*(m*3-(y*2)-7*x+15)+y*(10-4*y)+x*(x*2-3)+6
 
 x = float(input("Введите X: "))
 y = float(input("Введите Y: "))
 
 print("Результат: {0:.2f}".format(fun(x,y)))
+
+#Зачтено

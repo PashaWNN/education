@@ -34,6 +34,7 @@ def square(depth, coord=(0, 0), i=1, size=50, corner=None):
 
 lst = square(depth=args.depth)
 
+
 colors = [
     '#f97306',
     '#95d0fc',
