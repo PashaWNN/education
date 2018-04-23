@@ -1,6 +1,6 @@
-#include <stdio.h>
+#include <stdio.h>///
 
-void removeCell(float src[][], &float out[][], int x, int y, int n) {
+void removeCell(float **src, float **out, int x, int y, int n) {
   int rrow;
   int rcol;
   for (int row = 0; row<n; row++) {
@@ -29,6 +29,9 @@ int main() {
       scanf("%f", &mat[row][col]);
     }
   }
+  int maxRow;
+  int maxCol;
+  for (int row = 0; row<n; row++)
   printf("\n");
   return 0;
 }
